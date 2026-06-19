@@ -20,16 +20,16 @@ index.html                學員下載儀表板，主要改最上面的設定區
 
 - **資料夾**：`<分類>-<名稱>`，分類用 `P` / `A` / `C` / `E` / `工具`。例：`P-觀點作品引擎`、`工具-寫作風格萃取器`、`工具-查證引擎`。
 - **原始檔**：一律沿用瓦基提供的原始檔名，不擅自改名、不改寫內容。
-- **下載 zip**：放在 `downloads/`，命名為 `<專案包名>_知識庫.zip`、`<專案包名>_Instructions.zip`（專案包名不含分類前綴）；全部打包為 `downloads/專案包全集.zip`。
+- **下載 zip**：放在 `downloads/`。每個專案包打包成一個 `<專案包名>_原始檔.zip`（專案包名不含分類前綴，內含該包全部原始檔，排除 `知識庫_待補.md` 佔位檔）；全部打包為 `downloads/專案包全集.zip`。
 - **歷史版本**：放在 `packages/<該包>/archive/<舊版本號>/`。
 
 ## index.html 的維護方式
 
-- **主要改設定區**：`DOWNLOAD_ALL_URL` 與 `PACKAGES`。程式區已做過幾處調整（下載依副檔名命名、把按鈕接上 `DOWNLOAD_ALL_URL`、沒有知識庫的卡片不顯示知識庫鈕、移除歷史版本與更新重點、加上 `noindex` 防爬 meta），除非必要不要再動其他程式。
-- 所有下載連結都用**相對路徑**（例如 `downloads/簡報骨架引擎_知識庫.zip`、`packages/E-智囊團/00_instructions_v2.1.md`），這樣 GitHub Pages 與其他靜態主機都通用。路徑含空格要用 `%20`。
-- 一個專案包有多個知識庫檔時，`knowledge` 指向打包好的 zip；只有單一知識檔時直接指向那個檔；沒有知識庫時填 `"#"`（卡片就不會顯示知識庫鈕）。
-- 卡片的 `version` 要對齊該專案包 Instructions 檔裡標註的版本號（標題或內文）。卡片只顯示版本號與更新日期，不顯示歷史版本與更新重點。
-- `chatgpt`、`gemini` 是公開連結，瓦基會自己補，平常保留 `"#"`。
+- **主要改設定區**：`DOWNLOAD_ALL_URL` 與 `PACKAGES`。`PACKAGES` 每筆只需 `name`、`pace`、`desc`、`version`、`updated`、`chatgpt`、`gemini`。程式區已客製多處（下載依副檔名命名、按鈕接上 `DOWNLOAD_ALL_URL`、合併成單一「下載原始檔」鈕、版本號顯示在右上角藥丸、移除歷史版本與更新重點、`noindex` 防爬 meta），除非必要不要再動其他程式。
+- **「下載原始檔」會自動指向 `downloads/<name>_原始檔.zip`**（程式依 `name` 產生），所以新增或更新專案包時，一定要記得重新產生對應的 `<name>_原始檔.zip`。
+- `DOWNLOAD_ALL_URL` 等連結都用**相對路徑**（例如 `downloads/專案包全集.zip`），GitHub Pages 與其他靜態主機都通用。路徑含空格要用 `%20`。
+- 卡片的 `version` 要對齊該專案包 Instructions 檔裡標註的版本號（標題或內文）。卡片只顯示版本號（右上角藥丸）與更新日期，不顯示歷史版本與更新重點。
+- `chatgpt`、`gemini` 是公開連結，瓦基會自己補，平常保留 `"#"`（卡片仍會顯示按鈕，點下去會提示尚未設定）。
 
 ## 更新某個專案包的標準流程
 
@@ -38,7 +38,7 @@ index.html                學員下載儀表板，主要改最上面的設定區
 1. 先把該包目前的 Instructions 與知識庫檔複製一份到 `packages/<該包>/archive/<舊版本號>/`，當作備份（學員儀表板不顯示歷史版本）。
 2. 用新內容覆蓋對應的檔案（沿用檔名）。
 3. 更新 `index.html` 裡這個專案包的 `version`（對齊新 Instructions 的版本號）與 `updated`。
-4. 重新產生 `downloads/專案包全集.zip`，以及有變動的 `<專案包>_知識庫.zip` / `_Instructions.zip`。
+4. 重新產生 `downloads/<該專案包>_原始檔.zip` 與 `downloads/專案包全集.zip`。
 5. 用下方慣例 commit。
 6. **問瓦基要不要 push（沒有他同意不要 push）。**
 
