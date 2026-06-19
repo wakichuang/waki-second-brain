@@ -25,10 +25,10 @@ index.html                學員下載儀表板，主要改最上面的設定區
 
 ## index.html 的維護方式
 
-- **主要改設定區**：`DOWNLOAD_ALL_URL` 與 `PACKAGES`。`PACKAGES` 每筆只需 `name`、`pace`、`desc`、`version`、`updated`、`chatgpt`、`gemini`。程式區已客製多處（下載依副檔名命名、按鈕接上 `DOWNLOAD_ALL_URL`、合併成單一「下載原始檔」鈕、版本號顯示在右上角藥丸、移除歷史版本與更新重點、`noindex` 防爬 meta），除非必要不要再動其他程式。
+- **主要改設定區**：`DOWNLOAD_ALL_URL` 與 `PACKAGES`。`PACKAGES` 每筆只需 `name`、`pace`、`desc`、`version`、`updated`、`chatgpt`、`gemini`。程式區已客製多處（下載依副檔名命名、按鈕接上 `DOWNLOAD_ALL_URL`、合併成單一「下載原始檔」鈕、版本號顯示在右上角標籤、移除歷史版本與更新重點、`noindex` 防爬 meta），除非必要不要再動其他程式。
 - **「下載原始檔」會自動指向 `downloads/<name>_原始檔.zip`**（程式依 `name` 產生），所以新增或更新專案包時，一定要記得重新產生對應的 `<name>_原始檔.zip`。
 - `DOWNLOAD_ALL_URL` 等連結都用**相對路徑**（例如 `downloads/專案包全集.zip`），GitHub Pages 與其他靜態主機都通用。路徑含空格要用 `%20`。
-- 卡片的 `version` 要對齊該專案包 Instructions 檔裡標註的版本號（標題或內文）。卡片只顯示版本號（右上角藥丸）與更新日期，不顯示歷史版本與更新重點。
+- 卡片的 `version` 要對齊該專案包 Instructions 檔裡標註的版本號（標題或內文）。卡片只顯示版本號（右上角標籤）與更新日期，不顯示歷史版本與更新重點。
 - `chatgpt`、`gemini` 是公開連結，瓦基會自己補，平常保留 `"#"`（卡片仍會顯示按鈕，點下去會提示尚未設定）。
 
 ## 更新某個專案包的標準流程
