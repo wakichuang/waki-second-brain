@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 瓦基第二大腦｜專案包資源庫</title>
+<style>
+  :root{
+    --paper:#F8F7F3;
+    --card:#FFFFFF;
+    --ink:#21262F;
+    --ink-soft:#5C6473;
+    --line:#E7E4DB;
+    --shadow:0 1px 2px rgba(33,38,47,.04), 0 6px 22px rgba(33,38,47,.06);
+
+    /* PACE 四象限的專屬色，只用在「大字母」與卡片頂端那條細線 */
+    --p:#C98A2B;   /* P 觀點打造 */
+    --a:#3E8E7E;   /* A 自我覺察 */
+    --c:#3E5C9A;   /* C 策略顧問 */
+    --e:#8A5AA6;   /* E 認知拓展 */
+    --tool:#6B7280;/* 進階工具 */
+
+    --radius:14px;
+    --font:-apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC",
+           "Microsoft JhengHei", "Segoe UI", system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 22px 80px;}
+
+  /* ===== Header ===== */
+  header{padding:56px 0 32px;}
+  .eyebrow{
+    font-size:13px; letter-spacing:.14em; color:var(--ink-soft);
+    text-transform:uppercase; margin:0 0 14px;
+  }
+  h1{
+    font-size:clamp(28px, 5vw, 40px); font-weight:800; letter-spacing:-.01em;
+    margin:0 0 14px; line-height:1.2;
+  }
+  .lede{font-size:17px; color:var(--ink-soft); max-width:46ch; margin:0;}
+
+  .howto{
+    margin-top:24px; padding:14px 16px; background:rgba(62,92,154,.06);
+    border:1px solid rgba(62,92,154,.16); border-radius:12px;
+    font-size:14.5px; color:var(--ink); max-width:60ch;
+  }
+  .howto b{font-weight:700;}
+
+  /* ===== Download all band ===== */
+  .grab{
+    margin:30px 0 8px; background:var(--ink); color:#fff;
+    border-radius:var(--radius); padding:24px 26px;
+    display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+    box-shadow:var(--shadow);
+  }
+  .grab-text{flex:1 1 300px;}
+  .grab-text h2{font-size:19px; font-weight:700; margin:0 0 6px;}
+  .grab-text p{margin:0; font-size:14.5px; color:#C9CDD6; max-width:52ch;}
+  .grab-btn{
+    flex:0 0 auto; background:#fff; color:var(--ink);
+    border:none; border-radius:10px; padding:14px 22px;
+    font-family:var(--font); font-size:15px; font-weight:700; cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .grab-btn:hover{transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,0,0,.25);}
+  .grab-btn:focus-visible{outline:3px solid #9DB4E8; outline-offset:2px;}
+
+  /* ===== PACE section ===== */
+  .section{margin-top:46px;}
+  .section-head{display:flex; align-items:baseline; gap:16px; margin-bottom:18px;}
+  .letter{
+    font-size:clamp(40px, 7vw, 58px); font-weight:800; line-height:.9;
+    letter-spacing:-.02em;
+  }
+  .section-title{font-size:21px; font-weight:700; margin:0;}
+  .section-note{font-size:14px; color:var(--ink-soft); margin:2px 0 0;}
+
+  .p .letter{color:var(--p);}
+  .a .letter{color:var(--a);}
+  .c .letter{color:var(--c);}
+  .e .letter{color:var(--e);}
+  .tool .letter{color:var(--tool); font-size:clamp(32px,5vw,42px);}
+
+  /* ===== Cards ===== */
+  .grid{
+    display:grid; gap:16px;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+  }
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px 20px 16px; box-shadow:var(--shadow);
+    border-top:3px solid var(--accent, var(--line));
+    display:flex; flex-direction:column;
+  }
+  .p .card{--accent:var(--p);}
+  .a .card{--accent:var(--a);}
+  .c .card{--accent:var(--c);}
+  .e .card{--accent:var(--e);}
+  .tool .card{--accent:var(--tool);}
+
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
+  .card h3{font-size:17.5px; font-weight:700; margin:0;}
+  .badge{
+    flex:0 0 auto; font-size:11.5px; font-weight:700; letter-spacing:.02em;
+    color:var(--accent); background:color-mix(in srgb, var(--accent) 12%, #fff);
+    border:1px solid color-mix(in srgb, var(--accent) 30%, #fff);
+    padding:3px 9px; border-radius:999px; white-space:nowrap;
+  }
+  .desc{font-size:14px; color:var(--ink-soft); margin:9px 0 12px;}
+
+  .meta{font-size:12.5px; color:var(--ink-soft); margin:0 0 4px;}
+  .meta .v{color:var(--ink); font-weight:700;}
+  .changelog{font-size:13px; color:var(--ink); margin:0 0 14px;}
+  .changelog .lab{color:var(--ink-soft);}
+
+  .links{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;}
+  .chip{
+    font-family:var(--font); font-size:13px; font-weight:600; cursor:pointer;
+    background:#fff; color:var(--ink-soft);
+    border:1px solid var(--line); border-radius:8px; padding:7px 12px;
+    transition:border-color .12s ease, color .12s ease;
+  }
+  .chip:hover{border-color:var(--ink-soft); color:var(--ink);}
+  .dl{
+    background:var(--ink); color:#fff; border:1px solid var(--ink);
+  }
+  .dl:hover{background:#000;}
+  .chip:focus-visible{outline:3px solid #9DB4E8; outline-offset:2px;}
+
+  .hist-toggle{
+    align-self:flex-start; margin-top:auto; padding-top:6px;
+    background:none; border:none; cursor:pointer; font-family:var(--font);
+    font-size:13px; color:var(--ink-soft); display:flex; align-items:center; gap:6px;
+  }
+  .hist-toggle:hover{color:var(--ink);}
+  .hist-toggle .arr{transition:transform .15s ease; display:inline-block;}
+  .hist-toggle[aria-expanded="true"] .arr{transform:rotate(90deg);}
+  .history{
+    margin-top:10px; padding-top:10px; border-top:1px dashed var(--line);
+    font-size:13px; color:var(--ink-soft); display:none;
+  }
+  .history.open{display:block;}
+  .history .row{display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:4px 0;}
+  .history .hv{color:var(--ink); font-weight:600;}
+  .history .empty{color:var(--ink-soft);}
+  .history .mini{
+    font-size:12px; font-weight:600; cursor:pointer; background:#fff;
+    border:1px solid var(--line); border-radius:6px; padding:3px 8px; color:var(--ink-soft);
+  }
+  .history .mini:hover{color:var(--ink); border-color:var(--ink-soft);}
+
+  /* ===== Footer ===== */
+  footer{
+    margin-top:56px; padding-top:24px; border-top:1px solid var(--line);
+    font-size:14px; color:var(--ink-soft); max-width:60ch;
+  }
+
+  @media (max-width:560px){
+    .grab{padding:20px;}
+    .grab-btn{width:100%;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">AI 瓦基第二大腦</p>
+    <h1>專案包資源庫</h1>
+    <p class="lede">這門課的所有專案包，集中在這一個地方。想用哪個，點下去就帶走。</p>
+
+    <div class="howto">
+      <b>怎麼確認自己用的是不是最新版？</b><br>
+      打開你的專案包，看它的版本號，跟這裡卡片上的數字對一下。數字一樣，就是最新的。
+    </div>
+  </header>
+
+  <!-- ===== 一鍵下載全部（主要給 Claude 用戶） ===== -->
+  <section class="grab">
+    <div class="grab-text">
+      <h2>想一次拿到全部？</h2>
+      <p>適合 Claude 用戶：一鍵把所有專案包的原始檔打包下載，回到 Claude 自己建立 Project。只想更新其中一兩個的話，往下用卡片單獨下載就好。</p>
+    </div>
+    <button class="grab-btn" data-url="#" data-name="AI瓦基第二大腦_專案包全集.zip">一鍵下載全部（.zip）</button>
+  </section>
+
+  <!-- 所有卡片由下方 JavaScript 自動產生 -->
+  <main id="grid"></main>
+
+  <footer>
+    更新是可選的。每次更新我都會在卡片上寫清楚改了什麼，覺得用得上再換就好，不用急著跟。
+  </footer>
+
+</div>
+
+<script>
+/* =======================================================================
+   只要改這一區就好（下面的程式不用動）
+
+   1) DOWNLOAD_ALL_URL：「一鍵下載全部」那顆按鈕要連去的網址
+   2) PACKAGES：每一個專案包一筆。欄位說明：
+        name          專案包名稱
+        pace          屬於哪一象限，只能填 "P" / "A" / "C" / "E" / "TOOL"
+        desc          一句話用途
+        version       目前版本，例如 "v1.0"
+        updated       更新日期，例如 "2026/06/19"
+        changelog     這一版改了什麼（學員一眼就知道要不要更新）
+        chatgpt       ChatGPT GPT 的公開連結（沒有就保留 "#"）
+        gemini        Gemini Gem 的公開連結（沒有就保留 "#"）
+        instructions  Instructions 檔的下載網址
+        knowledge     知識庫檔的下載網址
+        history       過去的版本（沒有就留空陣列 []）
+   ======================================================================= */
+
+const DOWNLOAD_ALL_URL = "downloads/專案包全集.zip";   // ← 「一鍵下載全部」的目標（相對路徑，發布後即可用）
+
+const PACKAGES = [
+  // ---------- P 觀點打造 ----------
+  {
+    name:"觀點作品引擎", pace:"P",
+    desc:"把模糊的想法挖成清楚的觀點，一路寫成文章、Email、提案或說服訊息。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"downloads/觀點作品引擎_Instructions.zip", knowledge:"downloads/觀點作品引擎_知識庫.zip",
+    history:[]
+  },
+  {
+    name:"故事孵化引擎", pace:"P",
+    desc:"把你的回憶，孵化成扣人心絃的個人故事。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/P-故事孵化引擎/Instructions_V1.5.md", knowledge:"downloads/故事孵化引擎_知識庫.zip",
+    history:[]
+  },
+
+  // ---------- A 自我覺察 ----------
+  {
+    name:"思考覺察日記", pace:"A",
+    desc:"情緒整理、日記引導，回頭看自己的內在。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/A-思考覺察日記/Instructions_v1.3.md", knowledge:"downloads/思考覺察日記_知識庫.zip",
+    history:[]
+  },
+  {
+    name:"人際關係對話陪練", pace:"A",
+    desc:"困難對話先預演，衝突過後做復盤。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/A-人際關係對話陪練/Instructions_v1.3.md", knowledge:"downloads/人際關係對話陪練_知識庫.zip",
+    history:[]
+  },
+
+  // ---------- C 策略顧問 ----------
+  {
+    name:"決策分析引擎", pace:"C",
+    desc:"把難下的決定，拆成清楚的選項、取捨與盲點。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/C-決策分析引擎/Instructions_v4.md", knowledge:"downloads/決策分析引擎_知識庫.zip",
+    history:[]
+  },
+  {
+    name:"策略規劃引擎", pace:"C",
+    desc:"從目標倒推，用金字塔結構排出可執行的計畫。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/C-策略規劃引擎/Instructions_v4_GPTs版.md", knowledge:"downloads/策略規劃引擎_知識庫.zip",
+    history:[]
+  },
+  {
+    name:"簡報骨架引擎", pace:"C",
+    desc:"用 SCQA 開場、金字塔展開，先把簡報的骨架立起來。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"downloads/簡報骨架引擎_Instructions.zip", knowledge:"downloads/簡報骨架引擎_知識庫.zip",
+    history:[]
+  },
+
+  // ---------- E 認知拓展 ----------
+  {
+    name:"智囊團", pace:"E",
+    desc:"8 到 10 種不同立場的角色，輪流挑戰你的觀點。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/E-智囊團/00_instructions_v2.1.md", knowledge:"packages/E-智囊團/01_十位專家顧問檔案_v2.1.md",
+    history:[]
+  },
+  {
+    name:"洞見引擎", pace:"E",
+    desc:"沒靈感的時候，幫你往外發散、把想法的維度拉高。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/E-洞見引擎/00_instructions_v1.5_洞見引擎.md", knowledge:"#",
+    history:[]
+  },
+  {
+    name:"學習筆記", pace:"E",
+    desc:"書籍、課程、影音的統整與筆記，內含多源餵料技巧。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/E-學習筆記/00_instructions_v2.3.md", knowledge:"downloads/學習筆記_知識庫.zip",
+    history:[]
+  },
+
+  // ---------- 進階工具 ----------
+  {
+    name:"寫作風格萃取器", pace:"TOOL",
+    desc:"萃取出你自己的寫作風格，變成可以餵給 AI 的風格指南。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/工具-寫作風格萃取器/寫作風格萃取器%20Instructions%20_v3.1.md", knowledge:"downloads/寫作風格萃取器_知識庫.zip",
+    history:[]
+  },
+  {
+    name:"專案包建造器", pace:"TOOL",
+    desc:"用一問一答的方式，帶你從零打造一個新的專案包。",
+    version:"v1.0", updated:"2026/06/19", changelog:"首次發布",
+    chatgpt:"#", gemini:"#", instructions:"packages/工具-專案包建造器/專案包設計師_Instructions_v1.0.md", knowledge:"#",
+    history:[]
+  },
+
+  /* 之後要加歷史版本，history 這樣寫：
+     history:[
+       { version:"v1.1", updated:"2026/07/10", instructions:"舊版連結", knowledge:"舊版連結" },
+       { version:"v1.0", updated:"2026/06/19", instructions:"舊版連結", knowledge:"舊版連結" }
+     ]
+  */
+];
+
+/* ===================== 以下程式不用改 ===================== */
+
+const GROUPS = [
+  { key:"P",    cls:"p",    title:"觀點打造", note:"把想法變成拿得出手的作品" },
+  { key:"A",    cls:"a",    title:"自我覺察", note:"整理情緒，看懂自己" },
+  { key:"C",    cls:"c",    title:"策略顧問", note:"想清楚，再決定" },
+  { key:"E",    cls:"e",    title:"認知拓展", note:"卡住的時候，幫你找新角度" },
+  { key:"TOOL", cls:"tool", title:"進階工具", note:"打造與優化你自己的專案包" }
+];
+
+const esc = s => String(s).replace(/[&<>"]/g, c =>
+  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+
+function cardHTML(p){
+  const links = [];
+  if(p.chatgpt) links.push(`<button class="chip link-btn" data-url="${esc(p.chatgpt)}">ChatGPT</button>`);
+  if(p.gemini)  links.push(`<button class="chip link-btn" data-url="${esc(p.gemini)}">Gemini</button>`);
+  links.push(`<button class="chip dl dl-btn" data-url="${esc(p.instructions)}" data-name="${esc(p.name)}_Instructions.md">下載 Instructions</button>`);
+  links.push(`<button class="chip dl dl-btn" data-url="${esc(p.knowledge)}" data-name="${esc(p.name)}_知識庫.md">下載 知識庫</button>`);
+
+  let hist;
+  if(p.history && p.history.length){
+    hist = p.history.map(h =>
+      `<div class="row"><span class="hv">${esc(h.version)}</span><span>${esc(h.updated)}</span>
+        <button class="mini dl-btn" data-url="${esc(h.instructions)}" data-name="${esc(p.name)}_${esc(h.version)}_Instructions.md">Instructions</button>
+        <button class="mini dl-btn" data-url="${esc(h.knowledge)}" data-name="${esc(p.name)}_${esc(h.version)}_知識庫.md">知識庫</button>
+      </div>`).join("");
+  } else {
+    hist = `<div class="empty">目前還沒有更舊的版本。</div>`;
+  }
+
+  const changelog = p.changelog
+    ? `<p class="changelog"><span class="lab">更新重點：</span>${esc(p.changelog)}</p>` : "";
+
+  return `<article class="card">
+    <div class="card-top">
+      <h3>${esc(p.name)}</h3>
+      <span class="badge">最新版</span>
+    </div>
+    <p class="desc">${esc(p.desc)}</p>
+    <p class="meta"><span class="v">${esc(p.version)}</span> ・ 更新於 ${esc(p.updated)}</p>
+    ${changelog}
+    <div class="links">${links.join("")}</div>
+    <button class="hist-toggle" aria-expanded="false"><span class="arr">▸</span> 歷史版本</button>
+    <div class="history">${hist}</div>
+  </article>`;
+}
+
+function render(){
+  const root = document.getElementById("grid");
+  let html = "";
+  for(const g of GROUPS){
+    const items = PACKAGES.filter(p => p.pace === g.key);
+    if(!items.length) continue;
+    html += `<section class="section ${g.cls}">
+      <div class="section-head">
+        <span class="letter">${g.key === "TOOL" ? "⚙" : g.key}</span>
+        <div>
+          <h2 class="section-title">${g.key === "TOOL" ? "" : g.key + " "}${g.title}</h2>
+          <p class="section-note">${g.note}</p>
+        </div>
+      </div>
+      <div class="grid">${items.map(cardHTML).join("")}</div>
+    </section>`;
+  }
+  root.innerHTML = html;
+}
+
+/* 下載：抓檔案做成 blob 直接存檔，檔名乾淨。失敗就退而求其次開新分頁 */
+async function downloadFile(url, filename){
+  if(!url || url === "#"){
+    alert("這個連結還沒設定喔。填入真實網址、放上 GitHub 之後就能用了。");
+    return;
+  }
+  // 依網址實際副檔名修正下載檔名（讓 .zip 等不會被存成 .md）
+  const ext = (url.split("?")[0].match(/\.[a-zA-Z0-9]+$/) || [])[0];
+  if(ext && filename){ filename = filename.replace(/\.[^.]+$/, "") + ext; }
+  try{
+    const res = await fetch(url);
+    if(!res.ok) throw new Error("fetch failed");
+    const blob = await res.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename || "download";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1500);
+  }catch(e){
+    window.open(url, "_blank", "noopener");
+  }
+}
+
+/* 用事件委派處理所有按鈕 */
+document.addEventListener("click", e => {
+  const dlBtn = e.target.closest(".dl-btn, .grab-btn");
+  if(dlBtn){ downloadFile(dlBtn.dataset.url, dlBtn.dataset.name); return; }
+
+  const linkBtn = e.target.closest(".link-btn");
+  if(linkBtn){
+    const url = linkBtn.dataset.url;
+    if(!url || url === "#"){ alert("這個連結還沒設定喔。填入真實網址之後就能用了。"); }
+    else window.open(url, "_blank", "noopener");
+    return;
+  }
+
+  const tog = e.target.closest(".hist-toggle");
+  if(tog){
+    const open = tog.getAttribute("aria-expanded") === "true";
+    tog.setAttribute("aria-expanded", String(!open));
+    tog.parentElement.querySelector(".history").classList.toggle("open", !open);
+  }
+});
+
+render();
+// 讓「一鍵下載全部」按鈕吃 DOWNLOAD_ALL_URL 設定（模板原本沒接上）
+const grabBtn = document.querySelector(".grab-btn");
+if(grabBtn){ grabBtn.dataset.url = DOWNLOAD_ALL_URL; }
+</script>
+</body>
+</html>
