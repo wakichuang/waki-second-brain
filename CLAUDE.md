@@ -4,44 +4,43 @@
 
 ## 倉庫用途與結構
 
-這個倉庫是「AI 瓦基第二大腦」課程的後台，存放 12 個專案包的原始檔、做版本管理，並透過 `index.html`（GitHub Pages）讓學員下載。
+這個倉庫是「AI 瓦基第二大腦」課程的後台，存放所有專案包的原始檔、做版本管理，並透過 `index.html`（GitHub Pages）讓學員下載。
 
 ```
 packages/<分類>-<名稱>/   每個專案包一個資料夾
   ├── Instructions 檔      可能有完整版與 GPTs 版，沿用原始檔名
-  ├── 知識庫各檔            多檔保留，沿用原始檔名
-  └── CHANGELOG.md         版本紀錄，最新版在最上面
+  └── 知識庫各檔            多檔保留，沿用原始檔名
 downloads/                打包好的下載檔（zip）
-index.html                學員下載儀表板，只改最上面的設定區
+index.html                學員下載儀表板，主要改最上面的設定區
 ```
 
 完整說明見 [README.md](README.md)。
 
 ## 命名規則
 
-- **資料夾**：`<分類>-<名稱>`，分類用 `P` / `A` / `C` / `E` / `工具`；課程之外的內部包用 `其他`。例：`P-觀點作品引擎`、`工具-寫作風格萃取器`、`其他-查證引擎`。
+- **資料夾**：`<分類>-<名稱>`，分類用 `P` / `A` / `C` / `E` / `工具`。例：`P-觀點作品引擎`、`工具-寫作風格萃取器`、`工具-查證引擎`。
 - **原始檔**：一律沿用瓦基提供的原始檔名，不擅自改名、不改寫內容。
 - **下載 zip**：放在 `downloads/`，命名為 `<專案包名>_知識庫.zip`、`<專案包名>_Instructions.zip`（專案包名不含分類前綴）；全部打包為 `downloads/專案包全集.zip`。
 - **歷史版本**：放在 `packages/<該包>/archive/<舊版本號>/`。
 
 ## index.html 的維護方式
 
-- **只改最上面的設定區**：`DOWNLOAD_ALL_URL` 與 `PACKAGES`，以及為了讓 zip 下載正常而加的那兩處小程式（下載副檔名修正、把按鈕接上 `DOWNLOAD_ALL_URL`）。其餘程式不要動。
-- 所有下載連結都用**相對路徑**（例如 `downloads/簡報骨架引擎_知識庫.zip`、`packages/E-智囊團/00_instructions_v2.1.md`），這樣 GitHub Pages 與其他靜態主機都通用。
-- 一個專案包有多個知識庫檔時，`knowledge` 指向打包好的 zip；只有單一知識檔時直接指向那個檔；尚未提供時填 `"#"`。
+- **主要改設定區**：`DOWNLOAD_ALL_URL` 與 `PACKAGES`。程式區已做過幾處調整（下載依副檔名命名、把按鈕接上 `DOWNLOAD_ALL_URL`、沒有知識庫的卡片不顯示知識庫鈕、移除歷史版本與更新重點、加上 `noindex` 防爬 meta），除非必要不要再動其他程式。
+- 所有下載連結都用**相對路徑**（例如 `downloads/簡報骨架引擎_知識庫.zip`、`packages/E-智囊團/00_instructions_v2.1.md`），這樣 GitHub Pages 與其他靜態主機都通用。路徑含空格要用 `%20`。
+- 一個專案包有多個知識庫檔時，`knowledge` 指向打包好的 zip；只有單一知識檔時直接指向那個檔；沒有知識庫時填 `"#"`（卡片就不會顯示知識庫鈕）。
+- 卡片的 `version` 要對齊該專案包 Instructions 檔裡標註的版本號（標題或內文）。卡片只顯示版本號與更新日期，不顯示歷史版本與更新重點。
 - `chatgpt`、`gemini` 是公開連結，瓦基會自己補，平常保留 `"#"`。
 
 ## 更新某個專案包的標準流程
 
 當瓦基說「把某個專案包更新到新版本」時，依序做：
 
-1. 先把該包目前的 Instructions 與知識庫檔複製一份到 `packages/<該包>/archive/<舊版本號>/`，當作可下載的歷史版本。
+1. 先把該包目前的 Instructions 與知識庫檔複製一份到 `packages/<該包>/archive/<舊版本號>/`，當作備份（學員儀表板不顯示歷史版本）。
 2. 用新內容覆蓋對應的檔案（沿用檔名）。
-3. 在該包的 `CHANGELOG.md` **最上方**加一筆：新版本號、日期、這一版改了什麼。
-4. 更新 `index.html` 裡這個專案包的 `version`、`updated`、`changelog`，並在它的 `history` 陣列加入剛剛那個舊版本（連結指向 `archive` 路徑）。
-5. 重新產生 `downloads/專案包全集.zip`，以及有變動的 `<專案包>_知識庫.zip` / `_Instructions.zip`。
-6. 用下方慣例 commit。
-7. **問瓦基要不要 push（沒有他同意不要 push）。**
+3. 更新 `index.html` 裡這個專案包的 `version`（對齊新 Instructions 的版本號）與 `updated`。
+4. 重新產生 `downloads/專案包全集.zip`，以及有變動的 `<專案包>_知識庫.zip` / `_Instructions.zip`。
+5. 用下方慣例 commit。
+6. **問瓦基要不要 push（沒有他同意不要 push）。**
 
 > 找回舊版時，除了 `archive/`，也可以直接從 git 歷史紀錄還原。
 
